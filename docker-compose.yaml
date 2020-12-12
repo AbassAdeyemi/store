@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    restart: always
+    ports:
+    - 27017:27017
+    environment:
+    - SPRING_DATA_MONGODB_URI=mongodb://mongo:27017/store
+
+  api:
+    image: hayba/store:latest
+    build: .
+    container_name: 'store-backend'
+    depends_on:
+    - mongo
+    ports:
+    - 8005:8005
