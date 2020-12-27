@@ -19,11 +19,10 @@ public class User {
     private String username;
     @Size(min = 8)
     private String password;
-    private String role;
+    private String role = "ROLE_USER";
 
-    public User(@Email String username, @Size(min = 8) String password, String role) {
+    public User(@Email String username, @Size(min = 8) String password) {
         this.username = username;
         this.password = password;
-        this.role = role;
     }
 }

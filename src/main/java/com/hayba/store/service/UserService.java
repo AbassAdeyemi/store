@@ -1,9 +1,9 @@
 package com.hayba.store.service;
 
 import com.hayba.store.repository.UserRepository;
+import com.hayba.store.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,7 +27,7 @@ public class UserService implements UserDetailsService {
         .findByUsername(s)
         .map(
             u ->
-                new User(
+                new org.springframework.security.core.userdetails.User(
                     u.getUsername(),
                     u.getPassword(),
                     true,
@@ -38,11 +38,11 @@ public class UserService implements UserDetailsService {
         .get();
   }
 
-  public com.hayba.store.entity.User createUser(com.hayba.store.entity.User user) {
+  public User createUser(User user) {
     if (userRepository.findByUsername(user.getUsername()).isPresent())
       throw new IllegalStateException("User already exists with username: " + user.getUsername());
     return userRepository.save(
-        new com.hayba.store.entity.User(
-            user.getUsername(), passwordEncoder.encode(user.getPassword()), user.getRole()));
+        new User(
+            user.getUsername(), passwordEncoder.encode(user.getPassword())));
   }
 }
