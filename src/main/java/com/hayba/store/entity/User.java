@@ -10,19 +10,22 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
 @Document
-@Getter @Setter
+@Getter
+@Setter
 public class User {
-    @Id
-    private String id;
-    @Email
-    @Indexed(unique = true)
-    private String username;
-    @Size(min = 8)
-    private String password;
-    private String role = "ROLE_USER";
+  @Id private String id;
 
-    public User(@Email String username, @Size(min = 8) String password) {
-        this.username = username;
-        this.password = password;
-    }
+  @Email
+  @Indexed(unique = true, name = "username")
+  private String username;
+
+  @Size(min = 8)
+  private String password;
+
+  private String role = "ROLE_USER";
+
+  public User(@Email String username, @Size(min = 8) String password) {
+    this.username = username;
+    this.password = password;
+  }
 }

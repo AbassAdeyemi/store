@@ -35,6 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                     .and()
+                    .addFilter(corsFilter())
                     .addFilter(
                             new JwtUsernameAndPasswordAuthenticationFilter(
                                     authenticationManager(), jwtConfig, secretKey))
@@ -54,7 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             config.addAllowedHeader("*");
             config.addAllowedOrigin("*");
             config.setAllowCredentials(true);
-            //  config.addExposedHeader("Authorization");
+            config.addExposedHeader("Authorization");
 
             source.registerCorsConfiguration("/**", config);
             return new CorsFilter(source);
